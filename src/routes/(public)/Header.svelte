@@ -2,8 +2,9 @@
 	import { onMount } from "svelte";
 	import ButtonHeader from "./ButtonHeader.svelte";
 	import { beforeNavigate } from "$app/navigation";
-	beforeNavigate(checkHeaderStatus);
+	import type { BeforeNavigate } from "@sveltejs/kit";
 
+	// Sections of the website
 	import { arredo, cornici, preventivo } from "$lib/index";
 	var _arredo: boolean = false;
 	arredo.subscribe((e) => {
@@ -18,302 +19,154 @@
 		_preventivo = e;
 	});
 
-	import { homeOffsetHeight } from "$lib/index";
-	var _homeOffsetHeight: number | null = null;
-	homeOffsetHeight.subscribe((e) => {
-		_homeOffsetHeight = e;
-	});
+	// Header config
 	import { headerList } from "$lib/index";
 	var _headerList: string[][] = [[]];
 	headerList.subscribe((e) => {
 		_headerList = e;
 	});
 
+	// Langauges
 	import { t, locale, locales } from "$lib/languages/i18n";
 	var languagesDropDownMenu: HTMLElement;
-	function changeLanguage(e: any) {
+	function changeLanguage(e: any): void {
+		const target = e.target as HTMLButtonElement;
+		if (!mounted || target == null) return;
+
 		// change local order
-		locales[locales.indexOf(e.target.innerText)] = locales[0];
-		locales[0] = e.target.innerText;
+		locales[locales.indexOf(target.innerText)] = locales[0];
+		locales[0] = target.innerText;
 
 		// Set language
 		locale.set(locales[0]);
 	}
 
+	// HTML bindings
 	var headerSection: HTMLElement;
 	var lastScrollPosition: number = 0;
 
-	var hamburgerMenu: HTMLElement;
-	var isLeftMenuActive: boolean = false;
-	function leftMenu() {
-		if (!mounted) {
-			return;
-		}
-
-		if (isLeftMenuActive) {
-			headerSection.classList.remove("translate-x-0");
-			headerSection.classList.add("-translate-x-96");
-			hamburgerMenu.classList.remove("translate-x-36");
-			isLeftMenuActive = false;
-			return;
-		}
-
-		headerSection.classList.remove("-translate-x-96");
-		headerSection.classList.add("translate-x-0");
-		hamburgerMenu.classList.add("translate-x-36");
-		isLeftMenuActive = true;
-	}
-
-	function addHeaderBigSize() {
-		if (window.scrollY <= 25) {
-			headerSection.classList.remove("sm:border-opacity-30");
-			headerSection.classList.add("sm:border-opacity-0");
-		} else {
-			headerSection.classList.remove("sm:border-opacity-0");
-			headerSection.classList.add("sm:border-opacity-30");
-		}
-
-		if (window.scrollY <= 5) {
-			headerSection.classList.remove("shadow-2xl");
-			headerSection.classList.remove(
-				"sm:bg-opacity-80",
-				"sm:backdrop-blur"
-			);
-			//
-			headerSection.classList.add("shadow-none");
-			headerSection.classList.add(
-				"sm:bg-opacity-0",
-				"sm:backdrop-blur-none"
-			);
-		} else {
-			headerSection.classList.remove("shadow-none");
-			headerSection.classList.remove(
-				"sm:bg-opacity-0",
-				"sm:backdrop-blur-none"
-			);
-			//
-			headerSection.classList.add("shadow-2xl");
-			headerSection.classList.add("sm:bg-opacity-80", "sm:backdrop-blur");
-		}
-	}
-
+	// Path
+	beforeNavigate(checkHeaderStatus);
 	var isHomePage = false;
-	function checkHeaderStatus(e: any) {
-		if (e.to.route.id == "/" || e.to.route.id == "/cornici") {
-			isHomePage = true;
-			headerSection.classList.remove("absolute");
-			headerSection.classList.add("fixed");
-
-			onLoading();
-			return;
-		} else {
-			isHomePage = false;
-			headerSection.classList.remove("fixed");
-			headerSection.classList.add("absolute");
-
-			onLoading();
-			return;
-		}
-	}
-
-	function onLoading() {
-		if (window.innerWidth >= 640) {
-			headerSection.classList.remove(
-				"bg-gradient-to-b",
-				"from-expo-90",
-				"from-5%",
-				"to-black-90",
-				"to-35%",
-				"border-opacity-30"
-			);
-
-			if (!isHomePage) {
-				headerSection.classList.remove("shadow-2xl");
-				headerSection.classList.remove(
-					"sm:bg-opacity-80",
-					"sm:backdrop-blur",
-					"fixed",
-					"sm:border-b-2"
-				);
-				//
-				headerSection.classList.add("shadow-none");
-				headerSection.classList.add(
-					"sm:bg-opacity-0",
-					"sm:backdrop-blur-none",
-					"absolute"
-				);
-				headerSection.classList.remove("sm:bg-neutral-900");
-				return;
-			} else {
-				headerSection.classList.add("sm:border-b-2");
-			}
-
-			addHeaderBigSize();
-
-			headerSection.classList.add("sm:bg-neutral-900");
-		} else {
-			headerSection.classList.add(
-				"bg-gradient-to-b",
-				"from-expo-90",
-				"from-5%",
-				"to-black-90",
-				"to-35%",
-				"border-opacity-30",
-				"border-r-2",
-				"border-r-white"
-			);
-		}
-	}
-
-	var mounted = false;
-	onMount(() => {
-		mounted = true;
-
+	function checkHeaderStatus(event: BeforeNavigate) {
 		if (
-			window.location.pathname == "/" ||
-			window.location.pathname == "/cornici"
+			event.to != null &&
+			(event.to.route.id == "/(public)" ||
+				event.to.route.id == "/(public)/cornici")
 		) {
 			isHomePage = true;
 		} else {
 			isHomePage = false;
 		}
 
-		window.addEventListener("scroll", onScroll);
-		window.addEventListener("resize", onResize);
+		if (headerSection.classList.contains("-translate-y-24")) {
+			headerSection.classList.remove(...ROLL_UP_HEADER);
+			headerSection.classList.add(...ROLL_DOWN_HEADER);
+		}
+	}
 
-		onLoading();
+	// Hamburger Menu logic
+	var hamburgerMenu: HTMLElement;
+	var isLeftMenuActive: boolean = false;
 
-		function onResize() {
-			if (window.innerWidth < 640) {
-				hamburgerMenu.classList.remove("translate-x-36");
-				headerSection.classList.remove("absolute", "translate-x-0");
-
-				headerSection.classList.add(
-					"-translate-x-96",
-					"bg-gradient-to-b",
-					"from-expo-90",
-					"from-5%",
-					"to-black-90",
-					"to-35%",
-					"border-opacity-30",
-					"border-r-2",
-					"border-r-white",
-					"fixed"
-				);
-
-				isLeftMenuActive = false;
-				return;
-			}
-
-			headerSection.classList.remove(
-				"bg-gradient-to-b",
-				"from-expo-90",
-				"from-5%",
-				"to-black-90",
-				"to-35%",
-				"border-opacity-30"
-			);
-
-			if (!isHomePage) {
-				headerSection.classList.remove("shadow-2xl");
-				headerSection.classList.remove(
-					"sm:bg-opacity-80",
-					"sm:backdrop-blur",
-					"fixed"
-				);
-				//
-				headerSection.classList.add("shadow-none");
-				headerSection.classList.add(
-					"sm:bg-opacity-0",
-					"sm:backdrop-blur-none",
-					"absolute"
-				);
-				headerSection.classList.add("sm:bg-neutral-900");
-			}
-
-			addHeaderBigSize();
-			headerSection.classList.add("sm:bg-neutral-900");
+	const ROLL_RIGHT_HAMBURGER_MENU = ["translate-x-36"];
+	const ROLL_RIGHT_HEADER = ["translate-x-0"];
+	const ROLL_LEFT_HEADER = ["-translate-x-96"];
+	function triggerLeftMenu() {
+		if (!mounted) {
+			return;
 		}
 
-		function onScroll() {
-			if (window.innerWidth < 640 || !isHomePage) {
-				return;
-			}
-
-			if (_homeOffsetHeight == null) {
-				return;
-			}
-
-			if (window.scrollY <= 25) {
-				headerSection.classList.remove("sm:border-opacity-30");
-				headerSection.classList.add("sm:border-opacity-0");
-			} else {
-				headerSection.classList.remove("border-opacity-0");
-				headerSection.classList.add("sm:border-opacity-30");
-			}
-
-			if (window.scrollY <= 5) {
-				headerSection.classList.remove("shadow-2xl");
-				headerSection.classList.remove(
-					"sm:bg-opacity-80",
-					"sm:backdrop-blur"
-				);
-				//
-				headerSection.classList.add("shadow-none");
-				headerSection.classList.add(
-					"sm:bg-opacity-0",
-					"sm:backdrop-blur-none"
-				);
-			} else {
-				headerSection.classList.remove("shadow-none");
-				headerSection.classList.remove(
-					"sm:bg-opacity-0",
-					"sm:backdrop-blur-none"
-				);
-				//
-				headerSection.classList.add("shadow-2xl");
-				headerSection.classList.add(
-					"sm:bg-opacity-80",
-					"sm:backdrop-blur"
-				);
-			}
-
-			//if (_homeOffsetHeight == null) {
-			//    return;
-			//}
-
-			let downScroll = lastScrollPosition <= window.scrollY;
-			let upScrollSpeed = lastScrollPosition - window.scrollY;
-			let inGeneralPresentation = _homeOffsetHeight / 2 > window.scrollY;
-			lastScrollPosition = window.scrollY;
-
-			if (!mounted) {
-				return;
-			}
-
-			if (inGeneralPresentation) {
-				return;
-			}
-
-			if (!downScroll && upScrollSpeed > 10) {
-				headerSection.classList.remove("-translate-y-24");
-				return;
-			}
-
-			if (downScroll) {
-				headerSection.classList.add("-translate-y-24");
-			}
+		if (isLeftMenuActive) {
+			headerSection.classList.remove(...ROLL_RIGHT_HEADER);
+			hamburgerMenu.classList.remove(...ROLL_RIGHT_HAMBURGER_MENU);
+			headerSection.classList.add(...ROLL_LEFT_HEADER);
+			isLeftMenuActive = false;
+			return;
 		}
+
+		headerSection.classList.remove(...ROLL_LEFT_HEADER);
+		headerSection.classList.add(...ROLL_RIGHT_HEADER);
+		hamburgerMenu.classList.add(...ROLL_RIGHT_HAMBURGER_MENU);
+		isLeftMenuActive = true;
+	}
+
+	function onLoad() {
+		// Check if we are in the home page
+		const path = window.location.pathname;
+		if (path == "/" || path == "/cornici") {
+			isHomePage = true;
+		} else {
+			isHomePage = false;
+		}
+	}
+
+	const POSITIONED_HEADER = ["border-opacity-0", "bg-opacity-0", "absolute"];
+	const MOVING_HEADER = ["border-opacity-100", "bg-opacity-100", "fixed"];
+	const ROLL_DOWN_HEADER = ["translate-y-0"];
+	const ROLL_UP_HEADER = ["-translate-y-24"];
+	var isHeaderolledDown = true;
+	function onScroll() {
+		if (!mounted) return;
+
+		// Block movement on secondary pages
+		if (!isHomePage && window.innerWidth > 640) {
+			headerSection.classList.remove(...MOVING_HEADER);
+			headerSection.classList.add(...POSITIONED_HEADER);
+			return;
+		}
+
+		// Backgound logic only applies to big header
+		if (window.scrollY <= 1 && window.innerWidth > 640) {
+			headerSection.classList.remove(...MOVING_HEADER);
+			headerSection.classList.add(...POSITIONED_HEADER);
+		} else if (window.innerWidth > 640) {
+			headerSection.classList.remove(...POSITIONED_HEADER);
+			headerSection.classList.add(...MOVING_HEADER);
+		}
+
+		// Movement logic
+		const isScrollingDown: boolean = lastScrollPosition <= window.scrollY;
+		const isFast: boolean = window.scrollY - lastScrollPosition >= 10;
+
+		if (
+			(isHeaderolledDown ? isScrollingDown && isFast : isScrollingDown) &&
+			window.innerWidth > 640
+		) {
+			headerSection.classList.remove(...ROLL_DOWN_HEADER);
+			headerSection.classList.add(...ROLL_UP_HEADER);
+			isHeaderolledDown = false;
+		} else {
+			// Main header
+			headerSection.classList.remove(...ROLL_UP_HEADER);
+			headerSection.classList.add(...ROLL_DOWN_HEADER);
+			isHeaderolledDown = true;
+		}
+
+		lastScrollPosition = window.scrollY;
+	}
+
+	var mounted = false;
+	onMount(() => {
+		mounted = true;
 	});
 </script>
 
+<!-- Dom Events -->
+<svelte:window
+	on:load={onLoad}
+	on:scroll={onScroll}
+/>
+
+<!-- Quando e nascosto e clicchi in secondaria header non appare -->
+<!-- Header Body -->
 <header
-	class="text-white z-50 fixed sm:w-full w-auto sm:h-24 h-full
+	class="text-white border-b-white bg-black z-50 sm:w-full w-auto sm:h-24 h-full px-4 py-2 sm:p-header
+    flex flex-col sm:flex-row justify-evenly sm:justify-between items-start sm:items-center sm:gap-2
 
-    flex flex-col px-4 py-2 sm:p-header sm:flex-row justify-evenly sm:justify-between items-start sm:items-center sm:gap-2
-
-    sm:border-b-2 sm:border-b-white sm:border-opacity-0 sm:bg-opacity-80 sm:backdrop-blur sm:border-r-0 sm:-translate-x-0 backdrop-blur
-    -translate-x-96
+	border-opacity-100 bg-opacity-100
+	fixed border-b-0 sm:border-b-2 border-r-2 sm:border-r-0
+	-translate-x-96 sm:-translate-x-0
     
     transition-all"
 	bind:this={headerSection}
@@ -407,10 +260,12 @@
 		class="
         fixed flex flex-col justify-center items-center gap-2
 
+		bg-expo py-2 px-1 rounded-sm
+
         clickable sm:opacity-0 opacity-100 transition-all
         pointer-events-auto sm:pointer-events-none"
-		on:click={leftMenu}
-		on:keydown={leftMenu}
+		on:click={triggerLeftMenu}
+		on:keydown={triggerLeftMenu}
 		bind:this={hamburgerMenu}
 		role="button"
 		tabindex="0"

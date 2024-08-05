@@ -2,7 +2,6 @@
 	// TODO: Add content and translations
 
 	import { onMount } from "svelte";
-	import { homeOffsetHeight } from "$lib/index";
 	import { t } from "$lib/languages/i18n"; // add
 	import ProjectCard from "$lib/ProjectCard.svelte";
 
@@ -49,7 +48,6 @@
 	var mounted = false;
 	onMount(() => {
 		mounted = true;
-		homeOffsetHeight.set(120);
 	});
 </script>
 

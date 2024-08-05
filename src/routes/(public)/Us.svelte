@@ -1,172 +1,83 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import { t } from "$lib/languages/i18n"; // add
 
-	var usPairs = [
+	// Sections pair
+	var SECTIONS = [
+		{
+			img: "/background/expo1.jpg",
+			description: `Da una grande intuizione dell'architetto Emanuele Riva,
+					nasce nel 1993 Expo Arredo, con l'intento di proporre
+					elementi di arredo di qualità unici nel loro genere, in
+					grado di creare il vivere quotidiano in un ambiente
+					personalizzato legato alle esigenze della persona`,
+		},
 		{
 			img: "/background/cucinaHome.png",
-			description: `Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Voluptatibus facere nisi
-									at, nihil dolor dolorum corporis delectus
-									reiciendis ab harum quasi soluta est tempora
-									quis sit molestias fugit accusamus facilis? <br
-									/> Lorem ipsum dolor sit, amet consectetur adipisicing
-									elit. Mollitia dicta laudantium maiores consequatur
-									provident! Quia earum, suscipit, recusandae vero,
-									dignissimos facilis eum atque ad possimus libero
-									non quos ea reiciendis?'`,
+			description: `Storia`,
 		},
 	];
-
-	var mounted = false;
-	onMount(() => {
-		mounted = true;
-	});
 </script>
 
 <section
 	id="noi"
-	class="flex items-center justify-center min-h-screen w-screen bg-gradient-to-br from-black from-5% to-expo to-95% py-10"
+	class="relative flex items-center justify-center w-screen bg-gradient-to-br bg-white"
 >
 	<div
-		class="flex justify-center items-center px-8 py-4 w-full h-full lg:px-16"
+		class="flex flex-col items-center justify-center w-full h-full gap-10 sm:gap-0"
 	>
-		<div class="flex justify-center items-center w-full h-full">
-			<ul
-				class="flex flex-wrap gap-24 justify-center items-center w-full h-full"
+		<div
+			class="flex items-center justify-center flex-col gap-10 sm:gap-0 sm:grid sm:grid-cols-40-60 h-full w-full"
+		>
+			<div class="w-full h-full relative">
+				<img
+					class="object-cover w-full h-full"
+					src={SECTIONS[0].img}
+					alt=""
+				/>
+			</div>
+
+			<div
+				class="flex items-center justify-center sm:justify-start sm:ml-10"
 			>
-				<li class="flex justify-center items-center p-2">
-					<div
-						class="relative w-96 h-96 border-2 border-white sm:w-120 sm:h-120"
-					>
-						<img
-							class="object-cover absolute w-full h-full opacity-0 transition-all hover:opacity-100"
-							src="/background/gatto.jpeg"
-							alt=""
-						/>
-						<div
-							class="flex justify-center items-center p-6 py-20 w-full h-full bg-expo sm:p-10"
-						>
-							<div
-								class="flex overflow-auto justify-center w-full h-full items-top"
-							>
-								<p class="top-0 text-sm sm:text-xl">
-									Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Voluptatibus facere nisi
-									at, nihil dolor dolorum corporis delectus
-									reiciendis ab harum quasi soluta est tempora
-									quis sit molestias fugit accusamus facilis? <br
-									/> Lorem ipsum dolor sit, amet consectetur adipisicing
-									elit. Mollitia dicta laudantium maiores consequatur
-									provident! Quia earum, suscipit, recusandae vero,
-									dignissimos facilis eum atque ad possimus libero
-									non quos ea reiciendis?
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-
-				<li class="flex justify-center items-center p-2">
-					<div
-						class="relative w-96 h-96 border-2 border-white sm:w-120 sm:h-120"
-					>
-						<img
-							class="object-cover absolute w-full h-full opacity-100 transition-all hover:opacity-0"
-							src="/background/cucinaHome.png"
-							alt=""
-						/>
-						<div
-							class="flex justify-center items-center p-6 py-20 w-full h-full bg-expo sm:p-10"
-						>
-							<div
-								class="flex overflow-auto justify-center w-full h-full items-top"
-							>
-								<p class="top-0 text-sm sm:text-xl">
-									Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Voluptatibus facere nisi
-									at, nihil dolor dolorum corporis delectus
-									reiciendis ab harum quasi soluta est tempora
-									quis sit molestias fugit accusamus facilis? <br
-									/> Lorem ipsum dolor sit, amet consectetur adipisicing
-									elit. Mollitia dicta laudantium maiores consequatur
-									provident! Quia earum, suscipit, recusandae vero,
-									dignissimos facilis eum atque ad possimus libero
-									non quos ea reiciendis?
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-
-				<li
-					class="flex order-4 justify-center items-center p-2 lg:order-3"
+				<h2
+					class="text-expo text-lg lg:text-3xl font-extrabold w-4/5 lg:w-11/12"
 				>
-					<div
-						class="relative w-96 h-96 border-2 border-white sm:w-120 sm:h-120"
-					>
-						<img
-							class="object-cover absolute w-full h-full opacity-100 transition-all hover:opacity-0"
-							src="/background/cucinaHome.png"
-							alt=""
-						/>
-						<div
-							class="flex justify-center items-center p-6 py-20 w-full h-full bg-expo sm:p-10"
-						>
-							<div
-								class="flex overflow-auto justify-center w-full h-full items-top"
-							>
-								<p class="top-0 text-sm sm:text-xl">
-									Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Voluptatibus facere nisi
-									at, nihil dolor dolorum corporis delectus
-									reiciendis ab harum quasi soluta est tempora
-									quis sit molestias fugit accusamus facilis? <br
-									/> Lorem ipsum dolor sit, amet consectetur adipisicing
-									elit. Mollitia dicta laudantium maiores consequatur
-									provident! Quia earum, suscipit, recusandae vero,
-									dignissimos facilis eum atque ad possimus libero
-									non quos ea reiciendis?
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
+					{@html SECTIONS[0].description}
+				</h2>
+			</div>
+		</div>
 
-				<li
-					class="flex order-3 justify-center items-center p-2 lg:order-4"
-				>
-					<div
-						class="relative w-96 h-96 border-2 border-white sm:w-120 sm:h-120"
+		<div
+			class="flex items-center justify-center py-5 sm:py-0 sm:grid sm:grid-cols-55-45 h-full w-full border-t-2 border-expo"
+		>
+			<div class="flex items-center justify-center">
+				<a href="/storia">
+					<button
+						class="flex flex-row gap-2 justify-center items-center px-1 py-3 w-56 sm:w-60 lg:w-80 h-20 shadow-2xl transition-all bg-expo clickable"
 					>
-						<img
-							class="object-cover absolute w-full h-full opacity-0 transition-all hover:opacity-100"
-							src="/background/gatto.jpeg"
-							alt=""
-						/>
 						<div
-							class="flex justify-center items-center p-6 py-20 w-full h-full bg-expo sm:p-10"
+							class="flex justify-center items-center h-full font-extrabold tracking-wider uppercase font-button text-base"
 						>
-							<div
-								class="flex overflow-auto justify-center w-full h-full items-top"
-							>
-								<p class="top-0 text-sm sm:text-xl">
-									Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Voluptatibus facere nisi
-									at, nihil dolor dolorum corporis delectus
-									reiciendis ab harum quasi soluta est tempora
-									quis sit molestias fugit accusamus facilis? <br
-									/> Lorem ipsum dolor sit, amet consectetur adipisicing
-									elit. Mollitia dicta laudantium maiores consequatur
-									provident! Quia earum, suscipit, recusandae vero,
-									dignissimos facilis eum atque ad possimus libero
-									non quos ea reiciendis?
-								</p>
-							</div>
+							{@html SECTIONS[1].description}
 						</div>
-					</div>
-				</li>
-			</ul>
+
+						<div class="flex justify-center items-center h-full">
+							<img
+								src="/button/Vector.svg"
+								alt="Button Arrow"
+							/>
+						</div>
+					</button>
+				</a>
+			</div>
+
+			<div class="w-full h-full hidden sm:block">
+				<img
+					class="object-cover w-full h-full"
+					src={SECTIONS[0].img}
+					alt=""
+				/>
+			</div>
 		</div>
 	</div>
 </section>

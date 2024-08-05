@@ -4,6 +4,7 @@
 	import { onMount } from "svelte";
 
 	// notes: somethimes last brands items are already showing?
+	// notes: add languages and logos
 	// notes: lower screen top seems off
 
 	var marchi = "MARCHI";
@@ -352,11 +353,11 @@
 >
 	<div
 		class="absolute w-full h-full flex items-center sm:items-start justify-start sm:justify-center flex-col sm:flex-row gap-2 sm:gap-10
-		-translate-y-16 sm:-translate-y-0 lg:-translate-y-12 pointer-events-none z-0"
+		-translate-y-16 sm:-translate-y-0 lg:-translate-y-12 pointer-events-none z-0 opacity-10"
 	>
 		{#each marchi as m}
 			<h1
-				class="text-7xl sm:text-10xl lg:text-20xl font-extrabold opacity-15 uppercase"
+				class="text-7xl sm:text-10xl lg:text-20xl font-extrabold uppercase"
 			>
 				{m}
 			</h1>

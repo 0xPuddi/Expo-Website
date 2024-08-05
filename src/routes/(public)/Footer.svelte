@@ -1,5 +1,7 @@
 <script lang="ts">
+	//TODO add
 	import { t } from "$lib/languages/i18n";
+
 	import { arredo, cornici } from "$lib/index";
 	var _arredo: boolean = false;
 	arredo.subscribe((e) => {

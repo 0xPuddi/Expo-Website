@@ -7,6 +7,9 @@ html, body {
   margin:0; 
   padding:0; 
   height:100%; 
+
+  scrollbar-width: thin;
+  scrollbar-color: #154CC1 #FFFFFF;
 }
 
 .clickable {
@@ -15,4 +18,14 @@ html, body {
 
 .input {
     @apply bg-transparent border-2 border-expo rounded-sm focus:outline-none px-1 py-1 transition-all;
+}
+
+.perspective-card-to-right {
+  transform-style: preserve-3d;
+  transform: perspective(5000px) rotateY(20deg) rotateX(20deg);
+}
+
+.perspective-card-to-left {
+  transform-style: preserve-3d;
+  transform: perspective(5000px) rotateY(-20deg) rotateX(20deg);
 }

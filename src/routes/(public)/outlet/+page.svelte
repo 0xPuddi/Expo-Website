@@ -16,80 +16,90 @@
 	]);
 
 	// Projects data
-	var PROJECTS = [
+	var FURNITURES = [
 		{
-			href: "/progetti/0",
-			title: "Casa al lago",
+			href: "/outlet/0",
+			title: "Divano Estendibile",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "100'000.-"],
+				["Saldo", "22%"],
+				["Marca", "USM"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Casa al mare",
+			href: "/outlet/0",
+			title: "Sedia in pelle con manici in metallo",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "600'000.-"],
+				["Saldo", "33%"],
+				["Marca", "Lema"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Sinistro al ponte",
+			href: "/outlet/0",
+			title: "Tavolo Rotondo",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "200'000.-"],
+				["Saldo", "44%"],
+				["Marca", "Cappellini"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Divano a casa",
+			href: "/outlet/0",
+			title: "Divano Estendibile",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "500'000.-"],
+				["Saldo", "22%"],
+				["Marca", "USM"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Fiume",
+			href: "/outlet/0",
+			title: "Sedia in pelle con manici in metallo",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "500'000.-"],
+				["Saldo", "33%"],
+				["Marca", "Lema"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Titus a Sonogno",
+			href: "/outlet/0",
+			title: "Tavolo Rotondo",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "500'000.-"],
+				["Saldo", "44%"],
+				["Marca", "Cappellini"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Mare in Montagna",
+			href: "/outlet/0",
+			title: "Divano Estendibile",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "400'000.-"],
+				["Saldo", "22%"],
+				["Marca", "USM"],
 			],
 		},
 		{
-			href: "/progetti/0",
-			title: "Giorno al fiume",
+			href: "/outlet/0",
+			title: "Sedia in pelle con manici in metallo",
 			photosPaths: [""],
 			statistics: [
-				["Tempo", "123 giorni"],
-				["Costo", "300'000.-"],
+				["Saldo", "33%"],
+				["Marca", "Lema"],
+			],
+		},
+		{
+			href: "/outlet/0",
+			title: "Tavolo Rotondo",
+			photosPaths: [""],
+			statistics: [
+				["Saldo", "44%"],
+				["Marca", "Cappellini"],
 			],
 		},
 	];
+	const MARCHE = ["Lema", "USM", "Cappellini"];
 
 	function BubbleSort<T>(
 		fn: (a: T, b: T, c?: any) => boolean,
@@ -112,35 +122,44 @@
 	}
 
 	function aFirstAlphabeticThanB(
-		a: (typeof PROJECTS)[0],
-		b: (typeof PROJECTS)[0],
+		a: (typeof FURNITURES)[0],
+		b: (typeof FURNITURES)[0],
 		first?: boolean
 	): boolean {
 		const title_a = a.title;
 		const title_b = b.title;
 		return first ? title_a > title_b : title_a < title_b;
 	}
-	function aMoreCostThanB(
-		a: (typeof PROJECTS)[0],
-		b: (typeof PROJECTS)[0]
+	function aBrandThanB(
+		a: (typeof FURNITURES)[0],
+		_: (typeof FURNITURES)[0],
+		brand?: string
+	): boolean {
+		let brand_a: string = "";
+		for (let i = 0; i < a.statistics.length; ++i) {
+			if (a.statistics[i][0] == "Marca") {
+				brand_a = a.statistics[i][1];
+				break;
+			}
+		}
+
+		return brand_a != brand;
+	}
+	function aMoreSaleThanB(
+		a: (typeof FURNITURES)[0],
+		b: (typeof FURNITURES)[0]
 	): boolean {
 		let saldo_a: number = 0;
 		let saldo_b: number = 0;
 		for (let i = 0; i < a.statistics.length; ++i) {
-			if (a.statistics[i][0] == "Costo") {
-				let ssaldo_a: string = a.statistics[i][1];
-				saldo_a = Number(
-					ssaldo_a.replace(".", "").replace("-", "").replace("'", "")
-				);
+			if (a.statistics[i][0] == "Saldo") {
+				saldo_a = Number(a.statistics[i][1][0] + a.statistics[i][1][1]);
 				break;
 			}
 		}
 		for (let i = 0; i < b.statistics.length; ++i) {
-			if (b.statistics[i][0] == "Costo") {
-				let ssaldo_b: string = b.statistics[i][1];
-				saldo_b = Number(
-					ssaldo_b.replace(".", "").replace("-", "").replace("'", "")
-				);
+			if (b.statistics[i][0] == "Saldo") {
+				saldo_b = Number(b.statistics[i][1][0] + b.statistics[i][1][1]);
 				break;
 			}
 		}
@@ -154,15 +173,31 @@
 			case "Sort-Projects":
 				break;
 			case "A-Z":
-				PROJECTS = BubbleSort(aFirstAlphabeticThanB, PROJECTS, true);
+				FURNITURES = BubbleSort(
+					aFirstAlphabeticThanB,
+					FURNITURES,
+					true
+				);
 				break;
 			case "Z-A":
-				PROJECTS = BubbleSort(aFirstAlphabeticThanB, PROJECTS, false);
+				FURNITURES = BubbleSort(
+					aFirstAlphabeticThanB,
+					FURNITURES,
+					false
+				);
 				break;
-			case "Costo":
-				PROJECTS = BubbleSort(aMoreCostThanB, PROJECTS);
+			case "Saldo":
+				FURNITURES = BubbleSort(aMoreSaleThanB, FURNITURES);
 				break;
 			default:
+				if (MARCHE.includes(selectValue)) {
+					FURNITURES = BubbleSort(
+						aBrandThanB,
+						FURNITURES,
+						selectValue
+					);
+					break;
+				}
 				console.error("No projects fetching rule");
 		}
 	}
@@ -181,13 +216,14 @@
 	<div class="flex flex-col gap-7 justify-center items-center w-full">
 		<h1 class="text-7xl font-extrabold">
 			Expo Arredo: <br class="sm:hidden" />
-			<span class="text-expo">X</span> Progetti
+			<span class="text-expo">X</span> Prodotti Outlet
 		</h1>
 		<p class="flex flex-col gap-5 justify-center items-center w-11/12">
 			<span class="text-3xl font-bold">
-				Abbiamo lavorato su moltissimi progetti,
+				Disponiamo della raccolta migliore e più estensiva di tutta la
+				piazza
 				<span class="underline transition-all hover:text-expo"
-					>il nostro livello di esperienza non ha rivali</span
+					>la nostra qualità-prezzo non hanno rivali</span
 				>.
 			</span>
 			<span
@@ -220,26 +256,29 @@
 		<div
 			class="flex flex-col gap-10 justify-start items-center w-full sm:flex-row"
 		>
-			<h1 class="text-5xl font-extrabold">Progetti</h1>
+			<h1 class="text-5xl font-extrabold">Prodotti Outlet</h1>
 			<select
 				bind:value={selectValue}
 				on:change={changeElementsOrder}
 				class="px-2 py-1 h-full bg-transparent border-2 border-white transition-all focus:outline-none focus:bg-white focus:border-expo focus:text-expo"
 			>
-				<option value="Sort-Projects">Sort Projects</option>
+				<option value="Sort-Projects">Sort Products</option>
 				<option value="A-Z">A to Z</option>
 				<option value="Z-A">Z to A</option>
-				<option value="Costo">Costo</option>
+				<option value="Saldo">Saldo</option>
+				{#each MARCHE as m}
+					<option value={m}>{m}</option>
+				{/each}
 			</select>
 		</div>
 		<div
 			class="flex flex-col gap-10 justify-center items-center sm:grid-cols-2 sm:grid lg:grid lg:grid-cols-3"
 		>
-			{#each PROJECTS as p}
+			{#each FURNITURES as f}
 				<ProjectCardGrid
-					href={p.href}
-					Title={p.title}
-					Statistics={p.statistics}
+					href={f.href}
+					Title={f.title}
+					Statistics={f.statistics}
 				/>
 			{/each}
 		</div>

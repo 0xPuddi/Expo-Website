@@ -23,6 +23,9 @@ const config = {
             ],
         },
         extend: {
+            fontWeight: {
+                lightbold: "450",
+            },
             letterSpacing: {
                 "2widest": "0.2em",
             },
@@ -124,6 +127,8 @@ const config = {
                 expo: "#154CC1",
                 "expo-30": "rgba(21, 76, 193, 0.3)",
                 "black-30": "rgba(0, 0, 0, 0.3)",
+                "black-40": "rgba(0, 0, 0, 0.4)",
+                "black-50": "rgba(0, 0, 0, 0.5)",
                 "expo-60": "rgba(21, 76, 193, 0.6)",
                 "black-60": "rgba(0, 0, 0, 0.6)",
                 "expo-80": "rgba(21, 76, 193, 0.8)",
@@ -152,6 +157,26 @@ const config = {
                     "0 45px 65px rgba(0, 0, 0, 0.15)",
                 ],
             },
+            gradientColorStops: {
+                120: "120px"
+            },
+            gridTemplateColumns: {
+                "20-80": "20% 80%",
+                "80-20": "80% 20%",
+                "40-60": "40% 60%",
+                "55-45": "55% 45%",
+                "100": "100%",
+            },
+            gridTemplateRows: {
+                "30-70": "30% 70%",
+                "35-65": "35% 65%",
+                "45-55": "45% 55%",
+                "20-80": "20% 80%",
+                "80-20": "80% 20%",
+            },
+            maxHeight: {
+                "192": "48rem"
+            }
         },
     },
 

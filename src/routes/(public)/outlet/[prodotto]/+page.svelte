@@ -1,4 +1,6 @@
 <script lang="ts">
+	// TODO LOOK IT ALL
+
 	import { onMount } from "svelte";
 	import { t } from "$lib/languages/i18n";
 	import { headerList } from "$lib/index";
@@ -12,37 +14,34 @@
 		["/preventivo", $t("header.contatta")],
 	]);
 
-	export var Title = "Casa con gatto";
+	export var Title = "Divano";
 	export var Description =
 		"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem vitae beatae pariatur dignissimos? Dolore commodi, reprehenderit ab esse pariatur non dicta in ad modi. Voluptate laudantium hic magnam eaque sit. <br /> Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo voluptatem non a. Quod harum illum excepturi iste quo, facere dolore, perferendis commodi fuga fugiat quia autem magnam rerum soluta quidem. <br /> Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, sequi sint, aut praesentium at odio debitis ipsam laboriosam ducimus, sed reprehenderit eos? Provident nemo laudantium, labore consectetur itaque quibusdam magnam.";
 	export var Statistics = [
-		["Tempo", "1 giorno"],
-		["Costo", "10.-"],
-		["Numero mobili", "111"],
+		["Saldo", "22%"],
+		["Marca", "Lema"],
+		["Rimanenti", "1"],
 	];
 
 	// Project data. Images need the same aspect ratio, 2:1
 	export var photosProject = [
-		[
-			"/background/gattoLook.jpeg",
-			"/background/gattoLook.jpeg",
-			"Descrizione immagini",
-		],
-		[
-			"/background/gattoLook.jpeg",
-			"/background/gatto.jpeg",
-			"Cucina Cucina Cucina Cucina Cucina Cucina",
-		],
-		[
-			"/background/gattoLook.jpeg",
-			"/background/gattoLook.jpeg",
-			"Descrizione immagini",
-		],
+		{
+			img: "/background/gattoLook.jpeg",
+			description: "Descrizione immagini",
+		},
+		{
+			img: "/background/gatto.jpeg",
+			description: "Cucina Cucina Cucina Cucina Cucina Cucina",
+		},
+		{
+			img: "/background/gattoLook.jpeg",
+			description: "Descrizione immagini",
+		},
 	];
 
 	// Carouselle logic
 	var juxtaposeElementsWrapper: HTMLElement;
-	var currentPhotos = photosProject[0];
+	var currentPhoto = photosProject[0];
 	var previousJuxtaposeElementIndex = 0;
 	const HIDE_IMAGES = ["opacity-0", "absolute", "pointer-events-none"];
 	const SHOW_IMAGES = ["opacity-100", "relative"];
@@ -51,7 +50,7 @@
 
 		let length = e.target.id.length;
 		let id = e.target.id[length - 1];
-		currentPhotos = photosProject[id];
+		currentPhoto = photosProject[id];
 
 		// Change juxtapose visibility and bookeeping
 		let children = juxtaposeElementsWrapper.children;
@@ -75,15 +74,6 @@
 	var loadingScreenFaviconImagesFrame: HTMLElement;
 	function onPageLoaded() {
 		console.log("Loaded");
-
-		const element = document.querySelectorAll(".jx-knightlab");
-		element.forEach((e: Element) => {
-			let eHtml = e as HTMLElement;
-
-			if (eHtml != null) {
-				eHtml.style.visibility = "hidden";
-			}
-		});
 
 		loadingScreenFaviconImagesFrame.classList.add("bg-opacity-0");
 		loadingScreenImagesFrame.classList.add("pointer-events-none");
@@ -109,16 +99,6 @@
 	on:load={onPageLoaded}
 	on:loadeddata={onPageLoaded}
 />
-
-<head>
-	<script
-		src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"
-	></script>
-	<link
-		rel="stylesheet"
-		href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css"
-	/>
-</head>
 
 <div class="bg-black h-0 sm:h-24 top-0"></div>
 
@@ -149,32 +129,22 @@
 				{#if i == 0}
 					<div
 						id={"juxtapose-wrapper-" + String(i)}
-						class="juxtapose-wrapper flex overflow-hidden relative z-0 justify-center items-center w-full border-2 border-white opacity-100 juxtapose h-108 cursor-col-resize shadow-light-theater"
+						class="flex overflow-hidden relative z-0 justify-center items-center w-full border-2 border-white opacity-100 h-108 cursor-col-resize shadow-light-theater"
 					>
 						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[0]}
-							alt=""
-						/>
-						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[1]}
+							class="object-cover w-full h-full"
+							src={p.img}
 							alt=""
 						/>
 					</div>
 				{:else}
 					<div
 						id={"juxtapose-wrapper-" + String(i)}
-						class="juxtapose-wrapper flex overflow-hidden absolute z-0 justify-center items-center w-full border-2 border-white opacity-0 pointer-events-none juxtapose h-108 cursor-col-resize shadow-light-theater"
+						class="flex overflow-hidden absolute z-0 justify-center items-center w-full border-2 border-white opacity-0 pointer-events-none h-108 cursor-col-resize shadow-light-theater"
 					>
 						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[0]}
-							alt=""
-						/>
-						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[1]}
+							class="object-cover w-full h-full"
+							src={p.img}
 							alt=""
 						/>
 					</div>
@@ -183,7 +153,7 @@
 		</div>
 
 		<div class="flex flex-col gap-3 justify-center items-center">
-			<div class="">{currentPhotos[2]}</div>
+			<div class="">{currentPhoto.description}</div>
 			<div>
 				<ul class="flex flex-row gap-5 justify-center items-center">
 					{#each photosProject as _, i}
@@ -217,7 +187,7 @@
 
 	<div class="flex justify-center items-center w-full h-full lg:order-2">
 		<div
-			class="flex flex-col gap-7 justify-around items-start w-11/12 sm:w-10/12"
+			class="flex flex-col gap-7 justify-between items-start w-11/12 sm:w-10/12"
 		>
 			<h1 class="w-full text-7xl font-extrabold">{Title}</h1>
 
@@ -244,6 +214,25 @@
 						{/each}
 					</ul>
 				</div>
+			</div>
+
+			<div class="w-full h-full flex items-center justify-center">
+				<button
+					class="flex flex-row gap-2 justify-center items-center px-1 py-3 w-56 sm:w-60 lg:w-80 h-20 shadow-2xl transition-all bg-expo clickable"
+				>
+					<div
+						class="flex justify-center items-center h-full font-extrabold tracking-wider uppercase font-button text-bas text-white"
+					>
+						<p>Compra</p>
+					</div>
+
+					<div class="flex justify-center items-center h-full">
+						<img
+							src="/button/Vector.svg"
+							alt="Button Arrow"
+						/>
+					</div>
+				</button>
 			</div>
 		</div>
 	</div>

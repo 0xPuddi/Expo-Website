@@ -3,6 +3,7 @@
 	import ButtonHome from "./ButtonHome.svelte";
 	import HomeProjects from "./HomeProjects.svelte";
 	import HomeService from "./HomeService.svelte";
+	import Outlet from "./Outlet.svelte";
 	import Us from "./Us.svelte";
 	import Brands from "./Brands.svelte";
 
@@ -11,12 +12,12 @@
 	import { homeOffsetHeight } from "$lib/index";
 	import { headerList } from "$lib/index";
 	$: headerList.set([
-		["/cornici", $t("header.cornici")],
-		["/servizio", $t("header.servizio")],
+		["/storia", $t("header.storia")],
+		["#servizi", $t("header.servizio")],
 		["/progetti", $t("header.progetti")],
-		["/#noi", $t("header.noi")],
+		["/outlet", "Outlet"],
 		["/#brands", $t("header.brands")],
-		["/preventivo", $t("header.contatta")],
+		["/cornici", $t("header.cornici")],
 	]);
 
 	import { arredo } from "$lib/index";
@@ -81,5 +82,7 @@
 <HomeService />
 
 <HomeProjects />
+
+<Outlet />
 
 <Brands />

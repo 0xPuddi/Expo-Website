@@ -8,12 +8,13 @@ export const lang: Object = {
         "header.noi": "Noi",
         "header.brands": "Marche",
         "header.contatta": "Contatta",
+        "header.storia": "Storia",
 
         "header.buttonArredo": "Preventivo",
         "header.buttonCornici": "Preventivo Cornici",
 
         "home.heroImageArredo": "/home/expoArredoIT.svg",
-        "home.heroButtonArredo": "Preventivo",
+        "home.heroButtonArredo": "Prenota un Appuntamento",
 
         "home.heroImageCornici": "/home/expoCorniciIT.svg",
         "home.heroButtonCornici": "Servizio Cornici",

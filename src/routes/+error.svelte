@@ -2,7 +2,7 @@
 	import "../app.postcss";
 
 	import { page } from "$app/stores";
-	import { t } from "$lib/languages/i18n";
+	import { t } from "$lib/languages/i18n"; // Add to status
 	import PopUp from "$lib/PopUp.svelte";
 
 	import ButtonHome from "./(public)/ButtonHome.svelte";
@@ -12,13 +12,12 @@
 
 	import { headerList } from "$lib/index";
 	$: headerList.set([
-		["/arredo", $t("header.arredo")],
+		["/", $t("header.arredo")],
 		["/cornici", $t("header.cornici")],
-		["/servizio", $t("header.servizio")],
+		["/#servizi", $t("header.servizio")],
 		["/progetti", $t("header.progetti")],
 		["/#noi", $t("header.noi")],
 		["/#brands", $t("header.brands")],
-		["/preventivo", $t("header.contatta")],
 	]);
 	import { arredo } from "$lib/index";
 	arredo.set(true);
