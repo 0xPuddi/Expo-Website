@@ -68,6 +68,8 @@
 		autoplay
 		loop
 		muted
+		webkit-playsinline
+		playsinline
 	>
 		<source
 			src="/video/cats.mp4"

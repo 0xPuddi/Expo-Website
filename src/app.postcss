@@ -12,6 +12,15 @@ html, body {
   scrollbar-color: #154CC1 #FFFFFF;
 }
 
+@supports selector(::-webkit-scrollbar) {
+  html::-webkit-scrollbar {
+    background: #FFFFFF;
+  }
+  html::-webkit-scrollbar-thumb {
+    background: #154CC1;
+  }
+}
+
 .clickable {
     @apply hover:cursor-pointer active:scale-85 transition-all;
 }
