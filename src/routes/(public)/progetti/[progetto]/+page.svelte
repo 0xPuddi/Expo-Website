@@ -23,21 +23,18 @@
 
 	// Project data. Images need the same aspect ratio, 2:1
 	export var photosProject = [
-		[
-			"/background/gattoLook.jpeg",
-			"/background/gattoLook.jpeg",
-			"Descrizione immagini",
-		],
-		[
-			"/background/gattoLook.jpeg",
-			"/background/gatto.jpeg",
-			"Cucina Cucina Cucina Cucina Cucina Cucina",
-		],
-		[
-			"/background/gattoLook.jpeg",
-			"/background/gattoLook.jpeg",
-			"Descrizione immagini",
-		],
+		{
+			src: "/background/gattoLook.jpeg",
+			description: "Descrizione immagini",
+		},
+		{
+			src: "/background/gatto.jpeg",
+			description: "Cucina Cucina Cucina Cucina Cucina Cucina",
+		},
+		{
+			src: "/background/gattoLook.jpeg",
+			description: "Descrizione immagini",
+		},
 	];
 
 	// Carouselle logic
@@ -56,9 +53,9 @@
 		// Change juxtapose visibility and bookeeping
 		let children = juxtaposeElementsWrapper.children;
 		let previousJuxtaposeElement = children.namedItem(
-			`juxtapose-wrapper-${previousJuxtaposeElementIndex}`
+			`carouselle-image-${previousJuxtaposeElementIndex}`
 		);
-		let juxtaposeElement = children.namedItem(`juxtapose-wrapper-${id}`);
+		let juxtaposeElement = children.namedItem(`carouselle-image-${id}`);
 		previousJuxtaposeElementIndex = id;
 
 		// Hide
@@ -74,17 +71,6 @@
 	var loadingScreenImagesFrame: HTMLElement;
 	var loadingScreenFaviconImagesFrame: HTMLElement;
 	function onPageLoaded() {
-		console.log("Loaded");
-
-		const element = document.querySelectorAll(".jx-knightlab");
-		element.forEach((e: Element) => {
-			let eHtml = e as HTMLElement;
-
-			if (eHtml != null) {
-				eHtml.style.visibility = "hidden";
-			}
-		});
-
 		loadingScreenFaviconImagesFrame.classList.add("bg-opacity-0");
 		loadingScreenImagesFrame.classList.add("pointer-events-none");
 		loadingScreenImagesFrame.classList.add("opacity-0");
@@ -110,16 +96,6 @@
 	on:loadeddata={onPageLoaded}
 />
 
-<head>
-	<script
-		src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"
-	></script>
-	<link
-		rel="stylesheet"
-		href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css"
-	/>
-</head>
-
 <div class="bg-black h-0 sm:h-24 top-0"></div>
 
 <main
@@ -144,37 +120,26 @@
 				/>
 			</div>
 
-			<!-- It is important to have a;; photos of the same size, 1:2 ratio -->
 			{#each photosProject as p, i}
 				{#if i == 0}
 					<div
-						id={"juxtapose-wrapper-" + String(i)}
-						class="juxtapose-wrapper flex overflow-hidden relative z-0 justify-center items-center w-full border-2 border-white opacity-100 juxtapose h-108 cursor-col-resize shadow-light-theater"
+						id={"carouselle-image-" + String(i)}
+						class="flex overflow-hidden relative z-0 justify-center items-center w-full border-2 border-white opacity-100 h-108 cursor-col-resize shadow-light-theater"
 					>
 						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[0]}
-							alt=""
-						/>
-						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[1]}
+							class="object-cover w-full h-full"
+							src={p.src}
 							alt=""
 						/>
 					</div>
 				{:else}
 					<div
-						id={"juxtapose-wrapper-" + String(i)}
-						class="juxtapose-wrapper flex overflow-hidden absolute z-0 justify-center items-center w-full border-2 border-white opacity-0 pointer-events-none juxtapose h-108 cursor-col-resize shadow-light-theater"
+						id={"carouselle-image-" + String(i)}
+						class="flex overflow-hidden absolute z-0 justify-center items-center w-full border-2 border-white opacity-0 pointer-events-none h-108 cursor-col-resize shadow-light-theater"
 					>
 						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[0]}
-							alt=""
-						/>
-						<img
-							class="object-fill w-full h-full aspect-1-2"
-							src={p[1]}
+							class="object-cover w-full h-full aspect-1-2"
+							src={p.src}
 							alt=""
 						/>
 					</div>
@@ -183,7 +148,7 @@
 		</div>
 
 		<div class="flex flex-col gap-3 justify-center items-center">
-			<div class="">{currentPhotos[2]}</div>
+			<div class="">{currentPhotos.description}</div>
 			<div>
 				<ul class="flex flex-row gap-5 justify-center items-center">
 					{#each photosProject as _, i}

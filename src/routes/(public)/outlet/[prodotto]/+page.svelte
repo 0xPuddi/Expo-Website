@@ -124,7 +124,6 @@
 				/>
 			</div>
 
-			<!-- It is important to have a;; photos of the same size, 1:2 ratio -->
 			{#each photosProject as p, i}
 				{#if i == 0}
 					<div
