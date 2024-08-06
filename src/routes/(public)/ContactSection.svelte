@@ -245,11 +245,9 @@
 			{/if}
 		</div>
 
-		<div
-			class="flex items-center justify-center shadow-2xl w-10/12 sm:w-3/4 lg:w-2/6 min-h-128"
-		>
+		<div class="block shadow-2xl w-10/12 sm:w-3/4 lg:w-2/6 min-h-128">
 			<iframe
-				class="h-full w-full"
+				class="h-full w-full min-h-128"
 				title="Google maps"
 				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32653.45716357588!2d8.968982962913973!3d45.88083548029522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478429b58b9d3f5f%3A0x6e9a9bc1b2004cfb!2sExpo%20Arredo%20SA!5e0!3m2!1sit!2sch!4v1692431177848!5m2!1sit!2sch"
 				allowfullscreen={true}

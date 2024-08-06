@@ -68,7 +68,6 @@
 		autoplay
 		loop
 		muted
-		webkit-playsinline
 		playsinline
 	>
 		<source

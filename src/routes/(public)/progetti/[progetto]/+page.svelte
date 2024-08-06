@@ -123,7 +123,7 @@
 <div class="bg-black h-0 sm:h-24 top-0"></div>
 
 <main
-	class="flex items-center justify-evenly lg:justify-center flex-col lg:flex-row gap-24 lg:gap-1 min-h-screen w-screen bg-gradient-to-tl from-white from-60% to-expo to-60% py-36 lg:py-24 px-5 lg:px-10 text-black"
+	class="flex items-center justify-evenly lg:justify-center flex-col lg:flex-row gap-24 lg:gap-1 min-h-screen w-screen bg-gradient-to-tl from-expo lg:from-white from-30% lg:from-60% to-white lg:to-expo to-30% lg:to-60% py-36 lg:py-24 px-5 lg:px-10 text-black"
 >
 	<div
 		class="flex flex-col order-2 gap-10 justify-around items-center w-full lg:w-7/12 h-full lg:order-1"

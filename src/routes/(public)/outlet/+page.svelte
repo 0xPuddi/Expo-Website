@@ -211,10 +211,10 @@
 <div class="bg-black h-0 sm:h-24 top-0"></div>
 
 <main
-	class="flex items-center justify-center min-h-threeQuarterScreen w-screen bg-gradient-to-tr from-expo from-20% to-white to-20% text-black pt-40 py-24 px-5 sm:px-10"
+	class="flex items-center justify-center min-h-threeQuarterScreen w-screen bg-gradient-to-tr from-expo from-20% to-white to-20% text-black pt-28 py-24 px-5 sm:px-10"
 >
 	<div class="flex flex-col gap-7 justify-center items-center w-full">
-		<h1 class="text-7xl font-extrabold">
+		<h1 class="text-5xl lg:text-7xl font-extrabold">
 			Expo Arredo: <br class="sm:hidden" />
 			<span class="text-expo">X</span> Prodotti Outlet
 		</h1>
